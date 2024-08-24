@@ -6,10 +6,10 @@
     <ul class="no-bullets">
       <!-- <li v-for="item in items" :key="item">{{ item }}</li> -->
       <li
-        v-for="(item, index) in items"
+        v-for="(item, index) in props.items"
         :key="index"
         :style="{
-          color: index === items.length - 1 && item.includes('Fire') ? 'red' : 'white'
+          color: index === props.items.length - 1 && item.includes('Fire') ? 'red' : 'white'
         }"
       >
         {{ item }}
@@ -19,25 +19,7 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import {ref, onMounted} from 'vue'
-const items = ref([]);
-
-const fetchData = () => {
-      axios.get('http://localhost:8001/api/data')
-        .then(response => {
-          items.value = response.data;
-        })
-        .catch(error => {
-          console.error("There was an error fetching the data!", error);
-        });
-};
-
-onMounted(() => {
-  fetchData();
-  setInterval(fetchData, 5000);
-});
-
+const props = defineProps(['items'])
 </script>
 
 <style scoped>

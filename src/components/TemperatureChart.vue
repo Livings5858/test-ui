@@ -1,18 +1,14 @@
 <template>
   <div>
     <div ref="chart" style="width: 600px; height: 400px;"></div>
-    <div class="container">
-    <button class="custom-button" @click="clearTemperature">清除历史温度数据</button>
-    <button class="custom-button" @click="sendController">发送控制命令</button>
-    </div>
   </div>
 </template>
 
 <script setup>
 import * as echarts from 'echarts';
-import axios from 'axios';
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUpdated, watch } from 'vue'
 
+// const props = defineProps(['temperatures']);
 const temperatures = ref([])
 // 声明一个 ref 来存放该元素的引用
 // 必须和模板里的 ref 同名
@@ -21,42 +17,10 @@ const chart = ref(null)
 // 初始化图表
 const initChart = () => {
   chart.value = echarts.init(chart.value);
-  loadTemperatures();
-  updateChart();
 };
-
-const fetchTemperature = () => {
-  axios.get('http://localhost:8001/api/temperature')
-    .then(response => {
-      temperatures.value.push(response.data);
-    })
-    .catch(error => {
-      console.error("There was an error fetching the data!", error);
-    });
-
-  // 持久化存储数据到 localStorage
-  localStorage.setItem('temperatures', JSON.stringify(temperatures.value));
-  // 更新图表
-  updateChart();
-};
-
-const clearTemperature = () => {
-  temperatures.value = [];
-  localStorage.setItem('temperatures', JSON.stringify(temperatures.value));
-  updateChart();
-}
-
-const sendController = ()=>{
-  axios.get('http://localhost:8001/api/control?content="test cmd to sensor"')
-    .then(response => {
-      // temperatures.value.push(response.data);
-    })
-    .catch(error => {
-      console.error("There was an error fetching the data!", error);
-    });
-}
 
 const updateChart = () => {
+  loadTemperatures();
   const option = {
     title: {
       text: '温度变化折线图',
@@ -90,8 +54,8 @@ const loadTemperatures = () => {
 
 onMounted(() => {
   initChart();
-  fetchTemperature();
-  setInterval(fetchTemperature, 5000);
+  updateChart();
+  setInterval(updateChart, 500);
 });
 </script>
 
