@@ -6,12 +6,25 @@
 </template>
 
 <script setup>
-defineProps ({
-  imageSrc: {
-      type: String,
-      default: null,
-    }
-})
+import axios from 'axios';
+import { onMounted, ref } from 'vue'
+
+const imageSrc = ref("");
+
+const fetchData = () => {
+      axios.get('http://localhost:8001/api/imagepath')
+        .then(response => {
+          imageSrc.value = response.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the data!", error);
+        });
+};
+
+onMounted(() => {
+  fetchData();
+  setInterval(fetchData, 5000);
+});
 </script>
 
 <style scoped>
