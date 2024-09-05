@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <h1>工业互联网智能巡检机器人数据后台</h1>
+      <h1>MQTT 数据展示</h1>
     </div>
     <ul class="no-bullets">
       <!-- <li v-for="item in items" :key="item">{{ item }}</li> -->

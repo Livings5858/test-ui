@@ -1,29 +1,52 @@
-# vue-project
+# MQTT 数据展示前端实现
 
-This template should help get you started developing with Vue 3 in Vite.
+## 介绍
 
-## Recommended IDE Setup
+基于Vue.js框架，集成了Echarts和Axios，实现获取后端数据并展示。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+* Vue.js： https://cn.vuejs.org/
+* Echarts：https://echarts.apache.org/zh/index.html
+* Axios: https://axios.nodejs.cn/docs/intro
 
-## Customize configuration
+## 效果示例
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+<img src="public\image.png"  width="600" />
 
-## Project Setup
+
+## 目录结构
+
+```
+src/
+...
+├── components
+│   ├── ImagePlaceholder.vue   // 图片展示组件
+│   ├── ShowData.vue           // 数据列表展示组件
+│   ├── TemperatureChart.vue   // 温度折线图组件
+...
+└── views
+    └── HomeView.vue           // 父组件，负责统一向后端请求数据，并分发给子组件prop。
+```
+
+## 快速开始
+
+### 1. 安装依赖
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2. 运行（开发环境）
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### 3. 编译构建（生产环境）
 
 ```sh
 npm run build
 ```
+
+## 关联仓库
+
+* MQTT 数据展示后端实现：https://github.com/Livings5858/test-server
